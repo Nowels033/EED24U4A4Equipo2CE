@@ -36,13 +36,13 @@ public class BancoElectronico {
 				Cliente.transferenciaClientes(clientes, identificadorCliente);
 				break;
 			case 'E':
-				// Agregar lógica para añadir inversión
+				// 
 				break;
 			case 'F':
-				// Agregar lógica para eliminar inversión
+				// 
 				break;
 			case 'G':
-				// Agregar lógica para comprobar inversiones
+				//
 				break;
 			case 'H':
 				System.out.println("Saliendo...");
