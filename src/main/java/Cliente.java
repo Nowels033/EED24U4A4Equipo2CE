@@ -28,7 +28,7 @@ public class Cliente {
 		this.inversiones = new Inversion[10]; // Por ejemplo, un array de tamaño 10
 		this.numInversiones = 0;
 	}
-
+//
 	public void agregarInversion(Inversion inversion) {
 		if (numInversiones < inversiones.length) {
 			inversiones[numInversiones] = inversion;
