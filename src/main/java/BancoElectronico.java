@@ -19,9 +19,9 @@ public class BancoElectronico {
 		identificadorCliente = autenticarCliente(clientes);
 		
 		while (identificadorCliente != 0) {
+			Cliente.pagarRecibos(clientes, identificadorCliente);
 			mostrarMenu();
 			opcionMenu = sc.nextLine().toUpperCase().charAt(0);
-
 			switch (opcionMenu) {
 			case 'A':
 				Cliente.mostrarSaldoCliente(clientes, identificadorCliente);
@@ -37,12 +37,27 @@ public class BancoElectronico {
 				break;
 			case 'E':
 				// 
+				for (int i = 0; i < clientes.length; i++) {
+					if (clientes[i].getIdentificador()==identificadorCliente) {
+						Cliente.añadirRecibo(clientes[i].getRecibos());
+					}
+				}
 				break;
 			case 'F':
 				// 
+				for (int i = 0; i < clientes.length; i++) {
+					if (clientes[i].getIdentificador()==identificadorCliente) {
+						Cliente.eliminarRecibo(clientes[i].getRecibos());
+					}
+				}
 				break;
 			case 'G':
 				//
+				for (int i = 0; i < clientes.length; i++) {
+					if (clientes[i].getIdentificador()==identificadorCliente) {
+						Cliente.verRecibos(clientes[i].getRecibos());
+					}
+				}
 				break;
 			case 'H':
 				System.out.println("Saliendo...");
@@ -94,9 +109,9 @@ public class BancoElectronico {
 		System.out.println("B. Ingresar importe");
 		System.out.println("C. Obtener importe");
 		System.out.println("D. Transferir importe");
-		System.out.println("E. Añadir Inversión");
-		System.out.println("F. Eliminar Inversión");
-		System.out.println("G. Comprobar Inversiones");
+		System.out.println("E. Añadir Recibo");
+		System.out.println("F. Eliminar Recibo");
+		System.out.println("G. Comprobar Recibos");
 		System.out.println("H. Salir");
 	}
 }

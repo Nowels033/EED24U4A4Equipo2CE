@@ -1,5 +1,6 @@
 package main.java;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ public class Cliente {
 	private int identificador;
 	private int password;
 	private double monedero;
+	private ArrayList<Recibo> recibos = new ArrayList<>(5);
 	private Inversion[] inversiones;
 	private int numInversiones;
 
@@ -26,7 +28,7 @@ public class Cliente {
 		this.password = password;
 		this.monedero = numeroAleatorio(1000, 20000);
 		this.inversiones = new Inversion[10]; // Por ejemplo, un array de tamaño 10
-		this.numInversiones = 0;
+
 	}
 
 	public void agregarInversion(Inversion inversion) {
@@ -266,7 +268,7 @@ public class Cliente {
 
 	public static void transferenciaClientes(Cliente[] clientes, int idenficadorCliente) {
 		Scanner sc = new Scanner(System.in);
-		boolean noExiste=true;
+		boolean noExiste = true;
 		for (int i = 0; i < clientes.length; i++) {
 			if (clientes[i].identificador == idenficadorCliente) {
 				System.out.println("Introduce el identificador del otro cliente a transferir");
@@ -277,7 +279,7 @@ public class Cliente {
 					if (idenDestino == clientes[j].getIdentificador()) {
 						clientes[i].setMonedero(clientes[i].getMonedero() - transferencia);
 						clientes[j].setMonedero(clientes[j].getMonedero() + transferencia);
-						noExiste=false;
+						noExiste = false;
 					}
 
 				}
@@ -289,9 +291,76 @@ public class Cliente {
 		}
 	}
 
-	/**
-	 * MÉTODO OVERRIDE PARA IMPRIMIR TODO LOS DATOS DEL CLIENTE
-	 */
+	public static void pagarRecibos(Cliente[] clientes, int idenficadorCliente) {
+
+		for (int i = 0; i < clientes.length; i++) {
+			if (clientes[i].identificador == idenficadorCliente) {
+
+				for (int j = 0; j < clientes[i].recibos.size(); j++) {
+
+					if (Recibo.tocaPagarRecibos()) {
+
+						System.out.println("Te toca abonar el recibo de " + clientes[i].recibos.get(j).getNombre()
+								+ " de un importe de :" + clientes[i].recibos.get(j).getCantidad() + "€");
+
+						clientes[i].setMonedero(clientes[i].getMonedero() - clientes[i].recibos.get(j).getCantidad());
+
+						System.out.println("Tienes en el monedero ahora :" + clientes[i].getMonedero() + "€");
+					}
+				}
+			}
+		}
+
+	}
+
+	public static void añadirRecibo(ArrayList<Recibo> matrizReciboCliente) {
+
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Introduce el nombre de el Recibo que quieres crear");
+		String nombre = sc.nextLine();
+		System.out.println("Introduce el importe deel recibo que quieres crear");
+		double importe = sc.nextDouble();
+		matrizReciboCliente.add(new Recibo(importe, nombre));
+
+	}
+
+	public static void eliminarRecibo(ArrayList<Recibo> matrizReciboCliente) {
+		Scanner sc = new Scanner(System.in);
+		boolean fallo = true;
+		System.out.println("Introduce el nombre de la inversion que quieres eliminar");
+		String nombre = sc.nextLine();
+
+		for (int i = 0; i < matrizReciboCliente.size(); i++) {
+			Recibo inversion = matrizReciboCliente.get(i);
+			if (inversion.getNombre().equalsIgnoreCase(nombre)) {
+
+				matrizReciboCliente.remove(i);
+				fallo = false;
+				System.out.println("El recibo : " + nombre + " fue eliminada");
+			}
+		}
+
+		if (fallo) {
+
+			System.out.println("Error el recibo :" + nombre + " no existe en tu cuenta");
+		}
+	}
+
+	public static void verRecibos(ArrayList<Recibo> matrizReciboCliente) {
+		for (int i = 0; i < matrizReciboCliente.size(); i++) {
+			matrizReciboCliente.get(i).toString();
+		}
+	}
+
+	public ArrayList<Recibo> getRecibos() {
+		return recibos;
+	}
+
+	public void setRecibos(ArrayList<Recibo> recibos) {
+		this.recibos = recibos;
+	}
+
 	@Override
 	public String toString() {
 		return "Clientes [identificador =" + identificador + ", password =" + password + "]";

@@ -3,18 +3,18 @@ package main.java;
 import java.util.Random;
 
 public class Recibo {
-	
-	private int cantidad;
+
+	private double cantidad;
 	private String nombre;
 
-	public Recibo(int cantidad, String nombre) {
+	public Recibo(double cantidad, String nombre) {
 		super();
 		this.cantidad = cantidad;
 		this.nombre = nombre;
 
 	}
 
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
 
@@ -30,15 +30,33 @@ public class Recibo {
 		this.nombre = nombre;
 	}
 
-	public boolean pagarRecibos() {
+	static boolean tocaPagarRecibos() {
+		
 		Random rnd = new Random();
-		int numero = rnd.nextInt(4) + 1;
+		int probabilidad = rnd.nextInt(4);
 
-		if (numero == 1) {
+		if (probabilidad == 0) {
 			return true;
 		} else {
 			return false;
 		}
-
 	}
+
+	@Override
+	public String toString() {
+		return "Recibo [Nombre=" + getNombre() + ", Cantidad=" + getCantidad() + "]";
+	}
+
+//	public boolean pagarRecibos() {
+//		Random rnd = new Random();
+//		int numero = rnd.nextInt(4) + 1;
+//
+//		if (numero == 1) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//
+//	}
+
 }
